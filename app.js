@@ -29,6 +29,13 @@ app.configure('production', function(){
 
 // routes
 app.get('/', routes.index);
+app.get('/u/:user', routes.user);
+app.post('/post', routes.doPost);
+app.get('/reg', routes.reg);
+app.post('/reg', routes.doReg);
+app.get('/login', routes.login);
+app.post('/login', routes.doLogin);
+app.get('/logout', routes.logout);
 
 // 监听
 app.listen(3000);
