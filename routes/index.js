@@ -6,7 +6,7 @@ exports.index = function(req, res) {
 }
 
 exports.user = function(req, res) {
-
+    console.log(req.params.user);
 }
 
 exports.post = function(req, res) {
@@ -58,13 +58,58 @@ exports.doReg = function(req, res) {
 }
 
 exports.login = function(req, res) {
+    res.render('login', { title: '登陆页面' });
 
 }
 
 exports.doLogin = function(req, res) {
 
+
+    var md5 = crypto.createHash('md5');
+    var password = md5.update(req.body.password).digest('base64');
+
+    User.get(req.body.username, function(err, user) {
+        console.log(req.body.username);
+        if (!user) {
+            req.flash('error', '用户不存在');
+            return res.redirect('/login');
+        }
+        console.log(user.password, "===", password);
+        if (user.password != password) {
+            req.flash('error', '用户名或密码错误');
+            return res.redirect('/login');
+        }
+
+        req.session.user = user;
+        req.flash('success', '登陆成功');
+        res.redirect('/');
+    });
 }
 
 exports.logout = function(req, res) {
+    req.session.user = null;
+    req.flash('success', '登出');
+    res.redirect('/');
+}
 
+// 检查是否已经登出
+exports.checkLogout = function(req, res, next) {
+    if (!req.session.user) {
+        err = '已登出';
+        req.flash('error', err);
+        return res.redirect('/login');
+    }
+
+    next();
+}
+
+// 检查是否已经登陆
+exports.checkLogin = function(req, res, next) {
+    if (req.session.user) {
+        err = '已登入';
+        req.flash('error', err);
+        return res.redirect('/');
+    }
+
+    next();
 }
