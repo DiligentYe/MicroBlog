@@ -1,16 +1,18 @@
 {
-  "name": "microblog",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "ejs": "^2.5.5",
-    "express": "^2.5.8"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+    "name": "microblog",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "ejs": "^2.5.5",
+        "express": "^2.5.8",
+        "mongodb": ">= ^0.9.9",
+        "connect-mongo": ">= ^0.1.7"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
 }
