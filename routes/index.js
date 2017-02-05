@@ -1,16 +1,55 @@
 var crypto = require('crypto');
 var User = require('../models/user.js');
+var Post = require('../models/post.js');
 
 exports.index = function(req, res) {
-    res.render('index', { title: '首页' });
+    Post.get(null, function(err, posts) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        res.render('index', {
+            title: '首页',
+            posts: posts
+        });
+    });
 }
 
 exports.user = function(req, res) {
-    console.log(req.params.user);
+    User.get(req.params.user, function(err, user) {
+        if (!user) {
+            req.flash('error', '用户不存在');
+            res.redirect('/');
+        }
+
+        Post.get(req.params.user, function(err, posts) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('/');
+            }
+
+            res.render('user', {
+                title: '用户界面',
+                posts: posts
+            });
+        })
+    })
 }
 
-exports.post = function(req, res) {
+exports.doPost = function(req, res) {
+    console.log(req.body.post);
+    var post = new Post(req.session.user.name, req.body.post);
 
+    post.save(function(err, post) {
+        if (err) {
+            err = '发表失败';
+            req.flash('error', err);
+            res.redirect('/' + req.session.user.name)
+        }
+
+        req.flash('success', '发表成功');
+        res.redirect('/u/' + req.session.user.name)
+    })
 }
 
 exports.reg = function(req, res) {

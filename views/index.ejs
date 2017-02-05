@@ -17,20 +17,8 @@
 </div>
 
 <div class="row">
-	<div class="col-md-6">
-		<div class="media">
-	  		<div class="media-body">
-	    		<h4 class="media-heading">BYVoid说</h4>
-	    		<p>Bootstrap 中文网 为 Bootstrap 专门构建了自己的免费 CDN 加速服务。基于国内云厂商的 CDN 服务，访问速度更快、加速效果更明显、没有速度和带宽限制、永久免费。Bootstrap 中文网还对大量的前端开源工具库提供了 CDN 加速服务，请进入BootCDN 主页查看更多可用的工具库。</p>
-	  		</div>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="media">
-	  		<div class="media-body">
-	    		<h4 class="media-heading">BYVoid说</h4>
-	    		<p>Bootstrap 中文网 为 Bootstrap 专门构建了自己的免费 CDN 加速服务。基于国内云厂商的 CDN 服务，访问速度更快、加速效果更明显、没有速度和带宽限制、永久免费。Bootstrap 中文网还对大量的前端开源工具库提供了 CDN 加速服务，请进入BootCDN 主页查看更多可用的工具库。</p>
-	  		</div>
-		</div>
-	</div>
+	<% if(user){ %>
+		<%- partial('say') %>
+	<% } %>
+	<%- partial('post') %>
 </div>

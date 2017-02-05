@@ -42,7 +42,7 @@ app.configure('production', function() {
 // routes
 app.get('/', routes.index);
 app.get('/u/:user', routes.user);
-app.post('/post', routes.doPost);
+app.post('/u/:user', routes.doPost);
 // 注册前检查用户是否已经登陆
 app.get('/reg', routes.checkLogin);
 app.get('/reg', routes.reg);
