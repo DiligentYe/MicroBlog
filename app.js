@@ -1,3 +1,8 @@
+// 定义日志文件
+var fs = require('fs');
+var accessLogfile = fs.createWriteStream('access.log', { flags: 'a' });
+var errorLogfile = fs.createWriteStream('error.log', { flags: 'a' });
+
 // 引入包
 var express = require('express'),
     routes = require('./routes'),
@@ -27,7 +32,11 @@ app.configure(function() {
     app.use(app.router);
 
     app.use(express.static(__dirname + '/public'));
+
+    // express中间插件，写入访问日志
+    app.use(express.logger({ stream: accessLogfile }));
 });
+
 
 // 配置开发设置
 app.configure('development', function() {
@@ -37,6 +46,11 @@ app.configure('development', function() {
 // 配置生产设置
 app.configure('production', function() {
     app.use(express.errorHandler());
+    // 使用error注册错误响应函数，将错误写入错误日志
+    app.error(function(err, req, res, next) {
+        var meta = '[' + new Date() + ']' + req.url + '\n';
+        errorLogfile.write(meta + err.stack + '/n');
+    });
 });
 
 // routes

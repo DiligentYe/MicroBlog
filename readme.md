@@ -10,5 +10,8 @@ commit 5: 实现用户发表微博
 		  user.ejs 用户页面
 		  say.ejs 如果用户登陆，则显示发言部分
 		  post.ejs 显示用户发表微博界面
+commit 6: 实现用户访问日志管理 
+		  使用NODE_ENV=production node app.js 产品模式运行
+		  
 
 		  
